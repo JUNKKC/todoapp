@@ -1,14 +1,16 @@
-package com.dto;
+package com.springboot.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class TodoResponseDto {
 
-  private long todosId;
-  private String todosTitle;
+  private long id;
+  private String title;
   private int todoOrder;
-  private boolean Completed;
+  private boolean completed;
 }
