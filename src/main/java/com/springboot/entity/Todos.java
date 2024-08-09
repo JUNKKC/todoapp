@@ -1,4 +1,4 @@
-package com.entity;
+package com.springboot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class Todos {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long todoId;
-  @Column(nullable = false, length = 20)
+  private long id;
+  @Column(nullable = true, length = 20)
   private String title;
   @Column(nullable = false)
   private int todoOrder;
