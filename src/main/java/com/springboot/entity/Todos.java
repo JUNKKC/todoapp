@@ -15,7 +15,7 @@ public class Todos {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @Column(nullable = true, length = 20)
+  @Column(nullable = false, length = 20)
   private String title;
   @Column(nullable = false)
   private int todoOrder;
