@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/")
 @Validated
 public class TodoController {
   private final TodoService todoService;
@@ -27,7 +27,7 @@ public class TodoController {
     this.todoMapper = todoMapper;
   }
 
-  @PostMapping
+  @PostMapping("/")
   public ResponseEntity createTodo(@Valid @RequestBody TodoPostDto todoPostDto) {
 
     Todos todos = todoMapper.todosPostDtoToTodos(todoPostDto);
@@ -58,9 +58,8 @@ public class TodoController {
 //    return new ResponseEntity(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
 //  }
 
-  @GetMapping
+  @GetMapping("/")
   public ResponseEntity findAll() {
-
 
      return new ResponseEntity(todoMapper.todosToTodoResponseDtos(todoService.findAlltodos()), HttpStatus.OK);
   }
@@ -71,9 +70,9 @@ public class TodoController {
 
     todoService.deleteTodo(id);
 
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
-  @DeleteMapping
+  @DeleteMapping("/")
   public ResponseEntity deleteTodos(){
     todoService.deleteAllTodos();
 

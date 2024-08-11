@@ -11,8 +11,8 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("https://todobackend.com") // 허용할 도메인
-        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+        .allowedOriginPatterns("*") // 허용할 도메인
+        .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
         .allowCredentials(true);
   }
 }
