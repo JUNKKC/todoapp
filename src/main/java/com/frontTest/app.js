@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchTodos(); // 목록 새로고침
         }
     });
+
+    const deleteAllButton = document.getElementById('delete-all');
+    deleteAllButton.addEventListener('click', async () => {
+        await deleteAllTodos();
+        fetchTodos(); // 목록 새로고침
+    });
 });
 
 async function fetchTodos() {
@@ -69,6 +75,13 @@ async function toggleCompleted(id, completed) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ completed: completed })
+    });
+    fetchTodos(); // 목록 새로고침
+}
+
+async function deleteAllTodos() {
+    await fetch(`${API_URL}/`, {
+        method: 'DELETE',
     });
     fetchTodos(); // 목록 새로고침
 }

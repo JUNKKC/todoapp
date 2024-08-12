@@ -1,6 +1,5 @@
 package com.springboot;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,6 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedMethods("GET", "POST", "PUT", "PATCH", "OPTIONS", "DELETE")
         .allowedHeaders("Content-Type", "Authorization", "Accept")
         .allowCredentials(true)
-        .maxAge(3000);
+        .maxAge(5000);
   }
 }
