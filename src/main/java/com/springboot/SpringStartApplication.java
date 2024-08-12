@@ -19,7 +19,7 @@ public class SpringStartApplication {
 //        registry.addMapping("/**").allowedOrigins("https://todobackend.com/");
 //      }
 //    };
-  }
+}
 
 
 
