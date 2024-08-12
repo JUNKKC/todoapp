@@ -16,6 +16,11 @@ public class TodoService {
   }
 
   public Todos createTodo(Todos todos) {
+
+    int todoOrder = (int) todoRepository.count();
+
+    todos.setTodoOrder(todoOrder+1);
+
     return todoRepository.save(todos);
   }
 
