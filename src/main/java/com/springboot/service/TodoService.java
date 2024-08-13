@@ -1,6 +1,8 @@
 package com.springboot.service;
 
 import com.springboot.entity.Todos;
+import com.springboot.exception.BusinessLogicException;
+import com.springboot.exception.ExceptionCode;
 import com.springboot.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +64,9 @@ public class TodoService {
   public Todos findVerifiedTodo(long id) {
     Optional<Todos> optionalTodos = todoRepository.findById(id);
     Todos findTodos =
-        optionalTodos.orElseThrow(() -> new RuntimeException("Todo not found"));
+        optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
     return findTodos;
   }
+
 
 }

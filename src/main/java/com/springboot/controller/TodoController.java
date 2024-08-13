@@ -24,7 +24,7 @@ import java.net.URI;
 @Validated
 @CrossOrigin(origins = "/**")
 public class TodoController {
-  private final static String MEMBER_DEFAULT_URL = "/";
+//  private final static String MEMBER_DEFAULT_URL = "/"; URI 이용
   private final TodoService todoService;
   private final TodoMapper todoMapper;
 
@@ -37,12 +37,12 @@ public class TodoController {
   public ResponseEntity createTodo(@Valid @RequestBody TodoPostDto todoPostDto) {
 
     Todos todos = todoMapper.todosPostDtoToTodos(todoPostDto);
-    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, todos.getId());
+//    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, todos.getId());URI 이용
 
     Todos response = todoService.createTodo(todos);
     log.info("포스트 완료");
-//    return new ResponseEntity<>(todoMapper.todosToTodoResponseDto(response), HttpStatus.CREATED);
-    return ResponseEntity.created(location).build();
+    return new ResponseEntity<>(todoMapper.todosToTodoResponseDto(response), HttpStatus.CREATED);
+//    return ResponseEntity.created(location).build(); // URI 이용 응답값 비어서옴 나중에 해결
   }
   @PatchMapping("/{id}")
   public ResponseEntity updateTodo(@PathVariable ("id") @Positive long id, @Valid @RequestBody
@@ -52,8 +52,11 @@ public class TodoController {
 
     Todos todos = todoService.updateTodo(todoMapper.todosPatchDtoToTodos(todoPatchDto));
 
-    return new ResponseEntity<> (
-        new SingleResponseDto<>(todoMapper.todosToTodoResponseDto(todos)), HttpStatus.OK);
+    return new ResponseEntity<>(todoMapper.todosToTodoResponseDto(todos), HttpStatus.OK);
+
+    //아래 코드로 작성할 경우 Date 로 묶여서 반환됨
+//    return new ResponseEntity<> (
+//        new SingleResponseDto<>(todoMapper.todosToTodoResponseDto(todos)), HttpStatus.OK);
   }
   @GetMapping("/{id}")
   public ResponseEntity findById(@PathVariable("id") @Positive long id) {
