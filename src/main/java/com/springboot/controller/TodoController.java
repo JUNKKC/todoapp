@@ -4,7 +4,6 @@ import com.springboot.dto.TodoPatchDto;
 import com.springboot.dto.TodoPostDto;
 import com.springboot.entity.Todos;
 import com.springboot.mapper.TodoMapper;
-import com.springboot.response.SingleResponseDto;
 import com.springboot.service.TodoService;
 import com.springboot.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
