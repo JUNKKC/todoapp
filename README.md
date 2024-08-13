@@ -19,3 +19,9 @@
 - **Javadoc 설정**: 프로젝트의 모든 Java 소스에 대한 Javadoc 생성 지원.
 - **의존성 관리**: Spring Dependency Management 플러그인을 통한 의존성 버전 관리.
 # todoapp
+
+# 8월 9일
+- MVC 구성
+
+# 8월 12일 - 13일
+- 예외 처리
