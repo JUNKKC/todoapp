@@ -8,6 +8,7 @@ import javax.persistence.Column;
 @Getter
 @Setter
 public class TodoPostDto {
+  private long id;
   private String title;
   private int todoOrder;
   private boolean completed;
