@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #todo-list li {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Todo List</h1>
+<form id="todo-form">
+    <input type="text" id="todo-title" placeholder="Enter todo title" required>
+    <button type="submit">Add Todo</button>
+</form>
+
+<button id="delete-all">Delete All</button> <!-- 전체 삭제 버튼 추가 -->
+
+<ul id="todo-list"></ul>
+
+<script src="app.js"></script>
+</body>
+</html>
