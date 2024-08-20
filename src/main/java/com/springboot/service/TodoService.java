@@ -6,6 +6,7 @@ import com.springboot.exception.ExceptionCode;
 import com.springboot.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,8 @@ public class TodoService {
 
     todos.setTodoOrder(todoOrder+1);
 
+    todos.setModifiedAt(LocalDateTime.now());
+
     return todoRepository.save(todos);
   }
 
@@ -36,6 +39,9 @@ public class TodoService {
         .ifPresent(order -> findTodo.setTodoOrder(order));
     boolean completed = todos.isCompleted();
     findTodo.setCompleted(completed);
+
+    todos.setModifiedAt(LocalDateTime.now());
+
 
     return todoRepository.save(findTodo);
   }

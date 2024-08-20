@@ -12,7 +12,7 @@ public class TodoPatchDto {
   private String title;
   private int todoOrder;
   private boolean completed;
-  private LocalDateTime modifiedAt;
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 
   public void setId(long id) {
     this.id = id;

@@ -13,5 +13,5 @@ public class TodoPostDto {
   private String title;
   private int todoOrder;
   private boolean completed;
-  private LocalDateTime modifiedAt;
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 }
