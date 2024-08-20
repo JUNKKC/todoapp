@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity()
 @NoArgsConstructor
@@ -23,4 +24,6 @@ public class Todos {
   private int todoOrder = 0;
   @Column(nullable = false)
   private boolean completed;
+
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 }
