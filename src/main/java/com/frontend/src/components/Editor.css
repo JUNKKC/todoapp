@@ -1,0 +1,20 @@
+.Editor {
+  display: flex;
+  gap: 10px;
+}
+
+.Editor input {
+  flex: 1; /* 크기 */
+  padding: 15px; /* 크기 */
+  border: 1px solid rgb(220, 220, 220); /* 테두리 크기 , 실선 , 색상 */
+  border-radius: 5px; /* 모서리 */
+}
+
+.Editor button {
+  cursor: pointer;
+  width: 80px;
+  border: none;
+  background-color: rgb(37, 147, 255);
+  color: white;
+  border-radius: 5px;
+}

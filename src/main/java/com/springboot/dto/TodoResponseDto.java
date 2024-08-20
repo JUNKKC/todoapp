@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 public class TodoResponseDto {
@@ -13,4 +15,5 @@ public class TodoResponseDto {
   private String title;
   private int todoOrder;
   private boolean completed;
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 }
