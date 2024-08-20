@@ -54,7 +54,10 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
+
 out/
+*.yml
+application.properties
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -319,6 +322,5 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-*.yml
-application.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,react,intellij,node
