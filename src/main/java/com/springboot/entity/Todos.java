@@ -1,18 +1,17 @@
 package com.springboot.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity()
+@Entity
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class Todos {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +23,9 @@ public class Todos {
   private int todoOrder = 0;
   @Column(nullable = false)
   private boolean completed;
-@Column(nullable = false, name = "LAST_MODIFIED_AT")
+@Column(nullable = false)
   private LocalDateTime modifiedAt = LocalDateTime.now();
+
+
+
 }

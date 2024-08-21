@@ -5,6 +5,7 @@ import com.springboot.exception.BusinessLogicException;
 import com.springboot.exception.ExceptionCode;
 import com.springboot.repository.TodoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,61 +19,61 @@ public class TodoService {
     this.todoRepository = todoRepository;
   }
 
+  @Transactional
   public Todos createTodo(Todos todos) {
+    // 'todoOrder'를 현재 저장된 총 개수에 +1하여 설정
+    int todoOrder = (int) todoRepository.count() + 1;
+    todos.setTodoOrder(todoOrder);
 
-    int todoOrder = (int) todoRepository.count();
-
-    todos.setTodoOrder(todoOrder+1);
-
+    // 'modifiedAt'을 현재 시간으로 설정
     todos.setModifiedAt(LocalDateTime.now());
 
+    // DB에 저장
     return todoRepository.save(todos);
   }
 
-
+  @Transactional
   public Todos updateTodo(Todos todos) {
+    // DB에서 기존 엔티티를 찾음
     Todos findTodo = findVerifiedTodo(todos.getId());
 
+    // 필드 업데이트
     Optional.ofNullable(todos.getTitle())
-        .ifPresent(title -> findTodo.setTitle(title));
+        .ifPresent(findTodo::setTitle);
     Optional.ofNullable(todos.getTodoOrder())
-        .ifPresent(order -> findTodo.setTodoOrder(order));
-    boolean completed = todos.isCompleted();
-    findTodo.setCompleted(completed);
+        .ifPresent(findTodo::setTodoOrder);
 
-    todos.setModifiedAt(LocalDateTime.now());
+    findTodo.setCompleted(todos.isCompleted());
 
+    // 수정 시간 갱신
+    findTodo.setModifiedAt(LocalDateTime.now());
 
+    // 업데이트된 엔티티를 저장
     return todoRepository.save(findTodo);
   }
+
   public Todos findTodo(long id) {
     return findVerifiedTodo(id);
   }
-  public List<Todos> findAlltodos(){
+
+  public List<Todos> findAlltodos() {
     return todoRepository.findAll();
   }
-  //페이징 네이션 서비스
-//  public Page<Todos> findTodos(int page, int size) {
-//    return todoRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
-//  }
 
-
+  @Transactional
   public void deleteTodo(long id) {
     Todos findTodo = findVerifiedTodo(id);
-
     todoRepository.delete(findTodo);
-
   }
+
+  @Transactional
   public void deleteAllTodos() {
     todoRepository.deleteAll();
   }
 
+  // 특정 'Todo'를 검증하고 반환
   public Todos findVerifiedTodo(long id) {
     Optional<Todos> optionalTodos = todoRepository.findById(id);
-    Todos findTodos =
-        optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
-    return findTodos;
+    return optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
   }
-
-
 }
