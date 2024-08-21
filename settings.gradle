@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'todo.app'
+rootProject.name = 'springboot-starter'
