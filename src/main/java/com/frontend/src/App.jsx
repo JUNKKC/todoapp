@@ -81,16 +81,27 @@ function App() {
   const onAllDelete = () => {
     axios
         .delete(`http://localhost:8080/`)
+        .then(() => {setTodos([]);})
         .catch((error) => {
           console.error("할 일 삭제 중 오류가 발생했습니다!", error);
         });
   };
+  {/* 완료된 할 일 전체삭제 함수
+  const onAllCompletedDelete = () => {
+    if (filter === "COMPLETED")
+    axios
+        .delete(`http://localhost:8080/`)
+        .then(() => {setTodos([]);})
+        .catch((error) => {
+          console.error("할 일 삭제 중 오류가 발생했습니다!", error);
+        });
+  };*/}
 
   return (
     <div className="App">
       <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} onAllDelete={onAllDelete} />
     </div>
   );
 }
