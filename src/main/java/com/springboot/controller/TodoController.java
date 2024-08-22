@@ -88,10 +88,11 @@ public class TodoController {
     log.info("전체 삭제 완료");
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
-  //검색 기능 구현 주석
-//  @GetMapping("/search")
-//  public ResponseEntity<List<TodoResponseDto>> searchTodos(@RequestParam String title) {
-//    List<Todos> todos = todoService.searchTodosByTitle(title);
-//    return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
-//  }
+  // 제목 검색 기능 활성화
+  @GetMapping("/search")
+  public ResponseEntity<List<TodoResponseDto>> searchTodos(@RequestParam String title) {
+    List<Todos> todos = todoService.searchTodosByTitle(title);
+    log.info("검색 완료");
+    return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
+  }
 }

@@ -76,12 +76,7 @@ public class TodoService {
     return optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
   }
   // 'title'에 해당하는 'Todo' 목록을 반환
-//  public List<Todos> searchTodosByTitle(String title) {
-//    return todoRepository.findByTitleContainingIgnoreCase(title);
-//  }
-//
-//  public Todos findVerifiedTodo(long id) {
-//    Optional<Todos> optionalTodos = todoRepository.findById(id);
-//    return optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
-//  }
+  public List<Todos> searchTodosByTitle(String title) {
+    return todoRepository.findByTitleContainingIgnoreCase(title);
+  }
 }
