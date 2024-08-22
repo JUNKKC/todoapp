@@ -1,3 +1,15 @@
-.Header > h1 {
+.date {
   color: rgb(37, 147, 255);
+  display: flex;
 }
+
+.Header h1{
+  flex: 1;
+}
+
+.h {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+

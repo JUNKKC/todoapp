@@ -3,17 +3,30 @@
   flex-direction: column;
   gap: 20px;
 }
-
-.List > input {
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search> input {
+  flex: 1;
   width: 100%;
   border: none;
   border-bottom: 1px solid rgb(220, 220, 220);
   padding: 15px 0px;
 }
 
-.List > input:focus {
+.search> input:focus {
   outline: none;
   border-bottom: 1px solid rgb(37, 147, 255);
+}
+.search button{
+  cursor: pointer;
+  color: gray;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .List .todos_wrapper {
@@ -23,9 +36,7 @@
 }
 .test {
   display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
-  justify-content: space-between; /* 양 끝에 요소 배치 */
-  padding: 10px; /* 필요에 따라 패딩 조정 */
+  align-items: center;
 }
 .test .todoList{
   flex: 1;
@@ -37,9 +48,6 @@
   border: none;
   border-radius: 5px;
   padding: 5px;
-  height: 25px;
-  display: flex;
-  align-items: center; /* 수직 중앙 정렬 */
 }
 
 .status {
