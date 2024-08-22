@@ -1,12 +1,16 @@
 import "./Header.css";
 const Header = () => {
   return (
-    <div className="Header">
-      <h3>오늘은 해야할일 📆</h3>
-      <h1>{new Date().toLocaleDateString("ko-KR",{year: "numeric",
-          month: "long",
-          day: "numeric",})}</h1>
-    </div>
+      <div className="Header">
+          <div className="h"><h1>📆</h1>
+          <h4 className="date">{new Date().toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+          })}</h4></div>
+          <h2> "사용자명"의 오늘 할 일</h2>
+
+      </div>
   );
 };
 export default Header;
