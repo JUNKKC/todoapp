@@ -70,10 +70,18 @@ public class TodoService {
   public void deleteAllTodos() {
     todoRepository.deleteAll();
   }
-
   // 특정 'Todo'를 검증하고 반환
   public Todos findVerifiedTodo(long id) {
     Optional<Todos> optionalTodos = todoRepository.findById(id);
     return optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
   }
+  // 'title'에 해당하는 'Todo' 목록을 반환
+//  public List<Todos> searchTodosByTitle(String title) {
+//    return todoRepository.findByTitleContainingIgnoreCase(title);
+//  }
+//
+//  public Todos findVerifiedTodo(long id) {
+//    Optional<Todos> optionalTodos = todoRepository.findById(id);
+//    return optionalTodos.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TODO_NOT_FOUND));
+//  }
 }

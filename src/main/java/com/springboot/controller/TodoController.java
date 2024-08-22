@@ -2,6 +2,7 @@ package com.springboot.controller;
 
 import com.springboot.dto.TodoPatchDto;
 import com.springboot.dto.TodoPostDto;
+import com.springboot.dto.TodoResponseDto;
 import com.springboot.entity.Todos;
 import com.springboot.mapper.TodoMapper;
 import com.springboot.service.TodoService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -86,4 +88,10 @@ public class TodoController {
     log.info("전체 삭제 완료");
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
+  //검색 기능 구현 주석
+//  @GetMapping("/search")
+//  public ResponseEntity<List<TodoResponseDto>> searchTodos(@RequestParam String title) {
+//    List<Todos> todos = todoService.searchTodosByTitle(title);
+//    return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
+//  }
 }
