@@ -22,6 +22,10 @@ const List = ({ todos, onUpdate, onDelete, onAllDelete, searchTerm, setSearchTer
     };
     const onKeydown = (e) => {e.keyCode === 13 && handleSearch()};
 
+    const onChangeSearch= (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     const filteredTodos = getFilteredData();
 
     return (
@@ -34,12 +38,13 @@ const List = ({ todos, onUpdate, onDelete, onAllDelete, searchTerm, setSearchTer
                 <button onClick={() => handleFilterChange("ALL")}>전체 목록</button>
                 <button onClick={() => handleFilterChange("PENDING")}>할 일 목록</button>
                 <button onClick={() => handleFilterChange("COMPLETED")}>완료 목록</button>
-            </div><div className="search">
+            </div>
+            <div className="search">
             <input
                 type="text"
                 onKeyDown={onKeydown}
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={onChangeSearch}
                 placeholder="검색어를 입력하세요"
             />
             <button onClick={handleSearch}>검색</button>
