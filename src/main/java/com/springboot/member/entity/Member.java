@@ -24,10 +24,12 @@ public class Member {
     @Column(nullable = false, length = 100)
     private String password;
 
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Todos> todos = new ArrayList<>();
+
 
 }

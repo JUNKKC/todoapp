@@ -48,14 +48,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   protected void successfulAuthentication(HttpServletRequest request,
                                           HttpServletResponse response,
                                           FilterChain chain,
-                                          Authentication authResult) {
+                                          Authentication authResult) throws ServletException, IOException {
     Member member = (Member) authResult.getPrincipal();  // (4-1)
 
     String accessToken = delegateAccessToken(member);   // (4-2)
     String refreshToken = delegateRefreshToken(member); // (4-3)
 
     response.setHeader("Authorization", "Bearer " + accessToken);  // (4-4)
-    response.setHeader("Refresh", refreshToken);                   // (4-5)
+    response.setHeader("Refresh", refreshToken);
+
+    this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // (4-5)
   }
 
   // (5)
