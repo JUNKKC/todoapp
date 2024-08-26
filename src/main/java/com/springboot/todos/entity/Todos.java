@@ -1,5 +1,6 @@
-package com.springboot.entity;
+package com.springboot.todos.entity;
 
+import com.springboot.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Data
 public class Todos {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,8 @@ public class Todos {
 @Column(nullable = false)
   private LocalDateTime modifiedAt = LocalDateTime.now();
 
-
+  @ManyToOne
+  @JoinColumn(name = "memberId")
+    private Member member;
 
 }

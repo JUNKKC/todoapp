@@ -1,10 +1,10 @@
-package com.springboot.mapper;
+package com.springboot.todos.mapper;
 
 
-import com.springboot.dto.TodoPatchDto;
-import com.springboot.dto.TodoPostDto;
-import com.springboot.dto.TodoResponseDto;
-import com.springboot.entity.Todos;
+import com.springboot.todos.dto.TodoPatchDto;
+import com.springboot.todos.dto.TodoPostDto;
+import com.springboot.todos.dto.TodoResponseDto;
+import com.springboot.todos.entity.Todos;
 import org.mapstruct.Mapper;
 
 import java.util.List;

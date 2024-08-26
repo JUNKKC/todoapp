@@ -1,6 +1,6 @@
-package com.springboot.repository;
+package com.springboot.todos.repository;
 
-import com.springboot.entity.Todos;
+import com.springboot.todos.entity.Todos;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

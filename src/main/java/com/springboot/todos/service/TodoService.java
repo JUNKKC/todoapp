@@ -1,9 +1,9 @@
-package com.springboot.service;
+package com.springboot.todos.service;
 
-import com.springboot.entity.Todos;
+import com.springboot.todos.entity.Todos;
 import com.springboot.exception.BusinessLogicException;
 import com.springboot.exception.ExceptionCode;
-import com.springboot.repository.TodoRepository;
+import com.springboot.todos.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

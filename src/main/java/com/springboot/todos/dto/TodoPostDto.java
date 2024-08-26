@@ -1,19 +1,18 @@
-package com.springboot.dto;
+package com.springboot.todos.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
-@Builder
 @Getter
-public class TodoResponseDto {
+@Setter
+public class TodoPostDto {
 
-  private long id;
   private String title;
   private int todoOrder;
   private boolean completed;
   private LocalDateTime modifiedAt = LocalDateTime.now();
+
 }

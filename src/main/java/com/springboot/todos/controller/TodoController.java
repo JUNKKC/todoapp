@@ -1,11 +1,11 @@
-package com.springboot.controller;
+package com.springboot.todos.controller;
 
-import com.springboot.dto.TodoPatchDto;
-import com.springboot.dto.TodoPostDto;
-import com.springboot.dto.TodoResponseDto;
-import com.springboot.entity.Todos;
-import com.springboot.mapper.TodoMapper;
-import com.springboot.service.TodoService;
+import com.springboot.todos.dto.TodoPatchDto;
+import com.springboot.todos.dto.TodoPostDto;
+import com.springboot.todos.dto.TodoResponseDto;
+import com.springboot.todos.entity.Todos;
+import com.springboot.todos.mapper.TodoMapper;
+import com.springboot.todos.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
