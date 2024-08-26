@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/")  // 기본 경로를 /api/todos로 설정
+@RequestMapping("/todos")  // 기본 경로를 /api/todos로 설정
 @Validated
 @CrossOrigin(origins = "http://localhost:3000")  // 프론트엔드 URL에 맞게 설정
 //  private final static String MEMBER_DEFAULT_URL = "/"; URI 이용
