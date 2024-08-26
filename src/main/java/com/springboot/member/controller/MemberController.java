@@ -34,7 +34,7 @@ public class MemberController {
     public ResponseEntity createMember(@Valid  @RequestBody MemberPostDto memberPostDto) {
       Member member = mapper.memberPostDtoToMember(memberPostDto);
       Member response = memberService.createMember(member);
-      log.info("포스트 완료");
+      log.info("회원가입 성공");
 
         return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(response), HttpStatus.CREATED);
 
