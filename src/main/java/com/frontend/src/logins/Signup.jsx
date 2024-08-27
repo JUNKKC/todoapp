@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
 import './Signup.css';
+
 function Signup({ onSignup }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateEmail(email)) {
+            alert('유효한 이메일 주소를 입력해주세요.');
+            return;
+        }
+
         if (password !== confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
             return;
         }
+
         if (email === '' || password === '' || name === '') {
             alert('빈 칸을 모두 채워주세요.');
             return;
         }
+
         onSignup({ email, password, name });
     };
 
