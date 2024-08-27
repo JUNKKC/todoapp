@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-
+import './Login.css';
 function Login({ onLogin }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(username === ``){
+            alert("아이디를 입력해주세요")
+            return
+        }
         onLogin({ username, password });
     };
 
     return (
-        <div>
+        <div className="login-container">
             <h2>로그인</h2>
             <form onSubmit={handleSubmit}>
                 <div>

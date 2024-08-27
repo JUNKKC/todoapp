@@ -2,41 +2,36 @@ import React, { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
-import Signup from './Signup'; // 회원가입 컴포넌트
-import Login from './Login'; // 로그인 컴포넌트
+import Signup from '././logins/Signup';
+import Login from '././logins/Login';
 import axios from 'axios';
 import './App.css';
 
-// Axios 인스턴스 생성
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
         'Content-type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },
-
 });
 
-// 요청 인터셉터를 사용하여 Authorization 헤더 추가
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+        const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
-    (error) => {
-        return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
 );
 
 function App() {
     const [todos, setTodos] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTodos, setFilteredTodos] = useState([]);
-    const [isSignup, setIsSignup] = useState(false); // 회원가입 화면 여부
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 여부
+    const [isSignup, setIsSignup] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const idRef = useRef(0);
 
     useEffect(() => {
@@ -142,7 +137,7 @@ function App() {
             const response = await axiosInstance.post('/members/', userInfo);
             if (response.status === 201) {
                 alert('회원가입 성공! 이제 로그인하세요.');
-                setIsSignup(false); // 회원가입 후 로그인 화면으로 전환
+                setIsSignup(false);
             }
         } catch (error) {
             console.error('회원가입 중 오류가 발생했습니다!', error);
@@ -165,7 +160,7 @@ function App() {
                     console.log('토큰이 동일합니다.');
                 }
 
-                setIsLoggedIn(true); // 로그인 성공 시 로그인 상태로 변경
+                setIsLoggedIn(true);
             } else {
                 alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
             }
@@ -194,9 +189,13 @@ function App() {
             ) : isSignup ? (
                 <Signup onSignup={handleSignup} />
             ) : (
-                <div>
+                <div >
                     <Login onLogin={handleLogin} />
-                    <button onClick={() => setIsSignup(true)}>회원가입</button>
+                    <div className="login">
+                        <button className="new" onClick={() => setIsSignup(true)}>회원가입</button>
+
+                    </div>
+
                 </div>
             )}
         </div>

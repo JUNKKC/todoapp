@@ -3,5 +3,24 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
+}
+
+.login{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+.new {
+
+  cursor: pointer;
+  color: gray;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  height: 25px;
+  margin-right: 50px
 }
