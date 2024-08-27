@@ -170,11 +170,16 @@ function App() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+    };
+
     return (
         <div className="App">
             {isLoggedIn ? (
                 <>
-                    <Header />
+                    <Header onLogout={handleLogout} />
                     <Editor onCreate={onCreate} />
                     <List
                         todos={filteredTodos}
@@ -189,13 +194,11 @@ function App() {
             ) : isSignup ? (
                 <Signup onSignup={handleSignup} />
             ) : (
-                <div >
+                <div>
                     <Login onLogin={handleLogin} />
                     <div className="login">
                         <button className="new" onClick={() => setIsSignup(true)}>회원가입</button>
-
                     </div>
-
                 </div>
             )}
         </div>
