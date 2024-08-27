@@ -8,7 +8,7 @@ const Header = () => {
               month: "long",
               day: "numeric",
           })}</h4></div>
-          <h2> "사용자명"의 오늘 할 일</h2>
+          <h2> 의 오늘 할 일</h2>
 
       </div>
   );

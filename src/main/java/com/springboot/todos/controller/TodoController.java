@@ -42,7 +42,7 @@ public class TodoController {
 //    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, todos.getId());URI 이용
 
 
-    Todos response = todoService.createTodo(todos);
+    Todos response = todoService.createTodo(todos, SecurityContextHolder.getContext().getAuthentication());
     log.info("포스트 완료");
     return new ResponseEntity<>(todoMapper.todosToTodoResponseDto(response), HttpStatus.CREATED);
 //    return ResponseEntity.created(location).build(); // URI 이용 응답값 비어서옴 나중에 해결

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 function Signup({ onSignup }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -10,6 +11,10 @@ function Signup({ onSignup }) {
         e.preventDefault();
         if (password !== confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+        else if(email === '' || password === '' || name === '') {
+            alert('빈 칸을 모두 채워주세요.');
             return;
         }
         onSignup({ email, password ,name});
