@@ -1,6 +1,7 @@
 package com.springboot.auth.filter;
 
 import com.springboot.auth.dto.LoginDto;
+import com.springboot.auth.dto.LoginResponseDto; // LoginResponseDto를 import
 import com.springboot.auth.jwt.JwtTokenizer;
 import com.springboot.member.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,10 +55,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     String accessToken = delegateAccessToken(member);   // (4-2)
     String refreshToken = delegateRefreshToken(member); // (4-3)
 
-    response.setHeader("Authorization", "Bearer " + accessToken);  // (4-4)
-    response.setHeader("Refresh", refreshToken);
+    // 응답 DTO 생성
+    LoginResponseDto loginResponseDto = new LoginResponseDto(accessToken, refreshToken);
 
-    this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // (4-5)
+    // ObjectMapper를 사용하여 DTO를 JSON 형식으로 변환
+    ObjectMapper objectMapper = new ObjectMapper();
+    String responseBody = objectMapper.writeValueAsString(loginResponseDto);
+
+    // JSON 응답 설정
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    response.getWriter().write(responseBody);
   }
 
   // (5)

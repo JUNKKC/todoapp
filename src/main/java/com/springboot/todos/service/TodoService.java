@@ -26,10 +26,8 @@ public class TodoService {
   }
 
   @Transactional
-  public Todos createTodo(Todos todos) {
+  public Todos createTodo(Todos todos, Authentication authentication) {
     // 현재 인증된 사용자 정보 가져오기
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
     String username = authentication.getName();
 
     // 사용자 정보로 Member 엔티티 조회

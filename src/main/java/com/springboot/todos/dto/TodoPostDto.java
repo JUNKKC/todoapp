@@ -1,5 +1,6 @@
 package com.springboot.todos.dto;
 
+import com.springboot.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,13 @@ public class TodoPostDto {
   private int todoOrder;
   private boolean completed;
   private LocalDateTime modifiedAt = LocalDateTime.now();
+ private Member member;
 
+  public Member getMember() {
+    return member;
+  }
+
+  public void setMember(Member member) {
+    this.member = member;
+  }
 }

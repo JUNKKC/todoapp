@@ -10,12 +10,17 @@ import './App.css';
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080',
+    headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+
 });
 
 // 요청 인터셉터를 사용하여 Authorization 헤더 추가
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('Authorization'); // 로컬 스토리지에서 토큰 가져오기
+        const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -148,8 +153,18 @@ function App() {
     const handleLogin = async (credentials) => {
         try {
             const response = await axiosInstance.post('/auth/login', credentials);
+
             if (response.status === 200) {
-                localStorage.setItem('token', response.data.token);
+                const existingToken = localStorage.getItem('token');
+                const newToken = response.data.accessToken;
+
+                if (existingToken !== newToken) {
+                    localStorage.setItem('token', newToken);
+                    console.log('토큰이 변경되었습니다.');
+                } else {
+                    console.log('토큰이 동일합니다.');
+                }
+
                 setIsLoggedIn(true); // 로그인 성공 시 로그인 상태로 변경
             } else {
                 alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');

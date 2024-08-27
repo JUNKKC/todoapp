@@ -9,6 +9,8 @@ import com.springboot.todos.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,18 @@ public class TodoController {
   private final TodoService todoService;
   private final TodoMapper todoMapper;
 
+
   public TodoController(TodoService todoService, TodoMapper todoMapper) {
     this.todoService = todoService;
     this.todoMapper = todoMapper;
+
   }
 
-  @PostMapping
+  @PostMapping("/")
   public ResponseEntity createTodo(@Valid @RequestBody TodoPostDto todoPostDto) {
     Todos todos = todoMapper.todosPostDtoToTodos(todoPostDto);
 //    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, todos.getId());URI 이용
+
 
     Todos response = todoService.createTodo(todos);
     log.info("포스트 완료");
@@ -69,7 +74,7 @@ public class TodoController {
 //    return new ResponseEntity(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
 //  }
 
-  @GetMapping
+  @GetMapping("/")
   public ResponseEntity findAll() {
     log.info("전체 조회 완료");
     return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todoService.findAlltodos()), HttpStatus.OK);
@@ -82,7 +87,7 @@ public class TodoController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @DeleteMapping
+  @DeleteMapping("/")
   public ResponseEntity deleteTodos() {
     todoService.deleteAllTodos();
     log.info("전체 삭제 완료");
