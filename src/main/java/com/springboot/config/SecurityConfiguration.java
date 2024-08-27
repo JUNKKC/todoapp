@@ -27,20 +27,21 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class SecurityConfiguration {
   private final JwtTokenizer jwtTokenizer;
-  private final CustomAuthorityUtils authorityUtils; // 추가
+  private final CustomAuthorityUtils authorityUtils;
 
   public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils) {
+                               CustomAuthorityUtils authorityUtils) {
     this.jwtTokenizer = jwtTokenizer;
     this.authorityUtils = authorityUtils;
   }
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .headers().frameOptions().sameOrigin()
         .and()
         .csrf().disable()
-        .cors(withDefaults())
+        .cors(withDefaults())  // CORS 설정 적용
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .formLogin().disable()
@@ -48,16 +49,15 @@ public class SecurityConfiguration {
         .apply(new CustomFilterConfigurer())
         .and()
         .authorizeHttpRequests(authorize -> authorize
-            .antMatchers(HttpMethod.POST, "/members").permitAll()         // (1) 추가
-            .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")  // (2) 추가
-            .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")     // (3) 추가
-            .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")  // (4) 추가
-            .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")  // (5) 추가
+            .antMatchers(HttpMethod.POST, "/members").permitAll()         // (1)
+            .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")  // (2)
+            .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")     // (3)
+            .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")  // (4)
+            .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")  // (5)
             .anyRequest().permitAll()
         );
     return http.build();
   }
-
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -67,11 +67,13 @@ public class SecurityConfiguration {
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("*"));   // (9)
-    configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));  // (10)
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));   // 허용할 출처 설정
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));  // 허용할 메서드 설정
+    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // 허용할 헤더 설정
+    configuration.setAllowCredentials(true); // 인증 정보를 포함하도록 설정
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (11)
-    source.registerCorsConfiguration("/**", configuration);      // (12)
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 CORS 설정 적용
     return source;
   }
 
@@ -85,11 +87,11 @@ public class SecurityConfiguration {
       jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
       jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-      JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);  // (2) 추가
+      JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
       builder
           .addFilter(jwtAuthenticationFilter)
-          .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);   // (3)추가
+          .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
     }
   }
 }
