@@ -34,6 +34,14 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const idRef = useRef(0);
 
+    // 컴포넌트가 마운트될 때 로컬 스토리지에서 토큰을 확인하여 로그인 상태 설정
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     useEffect(() => {
         if (isLoggedIn) {
             const fetchTodos = async () => {
