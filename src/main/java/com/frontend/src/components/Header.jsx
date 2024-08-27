@@ -3,7 +3,7 @@ import "./Header.css";
 const Header = ({ onLogout }) => {
     return (
         <div className="Header">
-            <div className="h">
+            <div className="top">
                 <h1>📆</h1>
                 <h4 className="date">{new Date().toLocaleDateString("ko-KR", {
                     year: "numeric",
@@ -11,8 +11,11 @@ const Header = ({ onLogout }) => {
                     day: "numeric",
                 })}</h4>
             </div>
-            <h2> 의 오늘 할 일</h2>
-            <button className="logout-button" onClick={onLogout}>로그아웃</button>
+            <div className="logout-button">
+                <h2> 의 오늘 할 일</h2>
+                <button  onClick={onLogout}>로그아웃</button>
+            </div>
+
         </div>
     );
 };
