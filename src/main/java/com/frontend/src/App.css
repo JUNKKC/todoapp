@@ -1,6 +1,6 @@
 .App {
   width: 500px;
-  margin: 0 auto;
+  margin:  auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,5 +22,6 @@
   border-radius: 5px;
   padding: 5px;
   height: 25px;
-  margin-right: 50px
+  margin-right: 30px;
+  margin-top: 10px;
 }
