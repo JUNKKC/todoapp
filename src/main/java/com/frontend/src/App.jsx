@@ -134,7 +134,7 @@ function App() {
         };
 
         try {
-            const response = await axiosInstance.post('/members/', userInfo);
+            const response = await axios.post('http://localhost:8080/members/', userInfo);
             if (response.status === 201) {
                 alert('회원가입 성공! 이제 로그인하세요.');
                 setIsSignup(false);
