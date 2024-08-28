@@ -1,8 +1,6 @@
 ## 구현해야하는내용
 
-- ㅡ
-- 
+- 관리자 회원가입정보 확인
+- 탈퇴기능 구현 db애서 삭제
 
-## 에러발생
-- mysql
-  - ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)
+## 발표준비
