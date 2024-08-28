@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import './UserProfile.css';
 
-const UserProfile = ({ userId, userName, onProfileUpdate, onLogout }) => {
+const UserProfile = ({ userId, userName, onProfileUpdate, onLogout, onGoBack }) => {
     const [name, setName] = useState(userName);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -45,49 +46,58 @@ const UserProfile = ({ userId, userName, onProfileUpdate, onLogout }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>내 정보 수정</h2>
-            <div>
-                <label>이름:</label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="새 이름을 입력하세요"
-                />
-            </div>
-            <div>
-                <label>기존 비밀번호:</label>
-                <input
-                    type="password"
-                    value={oldPassword}
-                    onChange={(e) => setOldPassword(e.target.value)}
-                    placeholder="기존 비밀번호를 입력하세요"
-                />
-            </div>
-            <div>
-                <label>새 비밀번호:</label>
-                <input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="새 비밀번호를 입력하세요"
-                />
-            </div>
-            <div>
-                <label>새 비밀번호 확인:</label>
-                <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="새 비밀번호를 다시 입력하세요"
-                />
-            </div>
-            <button type="submit">정보 수정</button>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            {success && <div style={{ color: 'green' }}>{success}</div>}
-        </form>
-    );
-};
+        <div>
+        <div className="signup-container">
+            <form onSubmit={handleSubmit}>
+                <h2>내 정보 수정</h2>
+                <div>
+                    <label>이름:</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="새 이름을 입력하세요"
+                    />
+                </div>
+                <div>
+                    <label>기존 비밀번호:</label>
+                    <input
+                        type="password"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
+                        placeholder="기존 비밀번호를 입력하세요"
+                    />
+                </div>
+                <div>
+                    <label>새 비밀번호:</label>
+                    <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="새 비밀번호를 입력하세요"
+                    />
+                </div>
+                <div>
+                    <label>새 비밀번호 확인:</label>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="새 비밀번호를 다시 입력하세요"
+                    />
+                </div>
+                <button type="submit">정보 수정</button>
+                {error && <div style={{color: 'red'}}>{error}</div>}
+                {success && <div style={{color: 'green'}}>{success}</div>}
+            </form>
 
-export default UserProfile;
+        </div>
+    <div className="login">
+        <button className="toback" onClick={onGoBack}>뒤로가기</button>
+    </div>
+        </div>
+)
+    ;
+            };
+
+            export default UserProfile;
