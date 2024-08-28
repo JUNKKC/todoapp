@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
@@ -40,6 +41,7 @@ function App() {
     const [userId, setUserId] = useState(null);
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const idRef = useRef(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -51,7 +53,7 @@ function App() {
         try {
             const response = await axiosInstance.get('/members/me');
             setUserName(response.data.name);
-            setUserId(response.data.memberId); // userId를 상태로 저장
+            setUserId(response.data.memberId);
         } catch (error) {
             console.error('사용자 정보를 가져오는 중 오류가 발생했습니다!', error);
             alert('사용자 정보를 가져오는 중 오류가 발생했습니다.');
@@ -161,7 +163,7 @@ function App() {
             const response = await axios.post('http://localhost:8080/members/', userInfo);
             if (response.status === 201) {
                 alert('회원가입 성공! 이제 로그인하세요.');
-                setIsSignup(false);
+                navigate('/login');
             }
         } catch (error) {
             console.error('회원가입 중 오류가 발생했습니다!', error);
@@ -176,7 +178,8 @@ function App() {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.accessToken);
                 setIsLoggedIn(true);
-                setIsEditingProfile(false); // 메인 페이지로 이동
+                setIsEditingProfile(false);
+                navigate('/');
             } else {
                 alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
             }
@@ -195,9 +198,9 @@ function App() {
             });
 
             alert('회원 정보가 성공적으로 수정되었습니다. 다시 로그인하세요.');
-            handleLogout(); // 성공적으로 업데이트 후 로그아웃 처리
+            handleLogout();
         } catch (error) {
-            throw error; // 예외를 던져 UserProfile에서 처리
+            throw error;
         }
     };
 
@@ -205,22 +208,20 @@ function App() {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
         setUserName('');
-        setIsEditingProfile(false); // 메인 페이지로 이동
+        navigate('/login');
+    };
+
+    const handleSwitchToLogin = () => {
+        navigate('/login');
     };
 
     return (
         <div className="App">
             <Top />
-            {isLoggedIn ? (
-                isEditingProfile ? (
-                    <UserProfile
-                        userName={userName}
-                        onProfileUpdate={handleProfileUpdate}
-                        onLogout={handleLogout}
-                    />
-                ) : (
+            <Routes>
+                <Route path="/" element={isLoggedIn ? (
                     <>
-                        <Header name={userName} onLogout={handleLogout} onEditProfile={() => setIsEditingProfile(true)} />
+                        <Header name={userName} onLogout={handleLogout} onEditProfile={() => navigate('/profile')} />
                         <Editor onCreate={onCreate} />
                         <List
                             todos={filteredTodos}
@@ -232,22 +233,46 @@ function App() {
                             handleSearch={handleSearch}
                         />
                     </>
-                )
-            ) : isSignup ? (
-                <Signup
-                    onSignup={handleSignup}
-                    onSwitchToLogin={() => setIsSignup(false)}
-                />
-            ) : (
-                <div>
-                    <Login onLogin={handleLogin} />
-                    <div className="login">
-                        <button className="new" onClick={() => setIsSignup(true)}>회원가입</button>
+                ) : (
+                    <Navigate to="/login" />
+                )} />
+                <Route path="/login" element={!isLoggedIn ? (
+                    <div>
+                        <Login onLogin={handleLogin} />
+                        <div className="login">
+                            <button className="new" onClick={() => navigate('/signup')}>회원가입</button>
+                        </div>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <Navigate to="/" />
+                )} />
+                <Route path="/signup" element={!isLoggedIn ? (
+                    <Signup onSignup={handleSignup} onSwitchToLogin={handleSwitchToLogin} />
+                ) : (
+                    <Navigate to="/" />
+                )} />
+                <Route path="/profile" element={isLoggedIn ? (
+                    <UserProfile
+                        userId={userId}
+                        userName={userName}
+                        onProfileUpdate={handleProfileUpdate}
+                        onLogout={handleLogout}
+                        onGoBack={() => navigate('/')}
+                    />
+                ) : (
+                    <Navigate to="/login" />
+                )} />
+            </Routes>
         </div>
     );
 }
 
-export default App;
+function AppWrapper() {
+    return (
+        <Router>
+            <App />
+        </Router>
+    );
+}
+
+export default AppWrapper;

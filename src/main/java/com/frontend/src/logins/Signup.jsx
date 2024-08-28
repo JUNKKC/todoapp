@@ -30,7 +30,7 @@ function Signup({ onSignup, onSwitchToLogin }) {
         } else if (containsWhitespace(email)) {
             errorMessage = '이메일 주소에는 공백을 사용할 수 없습니다.';
         } else if (containsInvalidCharacters(email)) {
-            errorMessage = '이메일 에는 @,. 를 제외한 특수기호를 사용할 수 없습니다.';
+            errorMessage = '이메일에는 @,. 를 제외한 특수기호를 사용할 수 없습니다.';
         } else if (name.length > 8) {
             errorMessage = '닉네임은 8자 이하로 작성해주세요.';
         } else if (password !== confirmPassword) {
