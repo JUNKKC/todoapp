@@ -17,7 +17,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length = 8)
     private String name;
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
