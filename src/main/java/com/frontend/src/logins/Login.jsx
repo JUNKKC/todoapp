@@ -10,6 +10,10 @@ function Login({ onLogin }) {
             alert("아이디를 입력해주세요")
             return
         }
+        if(password === ``){
+            alert("비밀번호를 입력해주세요")
+            return
+        }
         onLogin({ username, password });
     };
 
