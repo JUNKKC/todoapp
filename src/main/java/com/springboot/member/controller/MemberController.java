@@ -30,7 +30,7 @@ public class MemberController {
     this.memberService = memberService;
     this.memberMapper = memberMapper;
   }
-
+// 회원가입
   @PostMapping("/")
   public ResponseEntity<?> createMember(@Valid @RequestBody MemberPostDto memberPostDto) {
     Member member = memberMapper.memberPostDtoToMember(memberPostDto);
@@ -38,7 +38,7 @@ public class MemberController {
     log.info("회원가입 성공");
     return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(response), HttpStatus.CREATED);
   }
-
+// 회원정보 수정
   @PatchMapping("/{id}")
   public ResponseEntity<?> updateMember(@PathVariable("id") long id, @Valid @RequestBody MemberPatchDto memberPatchDto) {
     memberPatchDto.setMemberId(id);
@@ -46,27 +46,27 @@ public class MemberController {
     log.info("수정 완료");
     return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(member), HttpStatus.OK);
   }
-
+// 회원정보 1인 조회
   @GetMapping("/{id}")
   public ResponseEntity<?> findById(@PathVariable("id") long id) {
     Member member = memberService.findMember(id);
     log.info("조회 완료");
     return new ResponseEntity<>(memberMapper.memberToMemberResponseDto(member), HttpStatus.OK);
   }
-
+// 회원 전체 조회
   @GetMapping("/")
   public ResponseEntity<?> findAll() {
     log.info("전체 조회 완료");
     return new ResponseEntity<>(memberMapper.membersToMemberResponseDtos(memberService.findAllMembers()), HttpStatus.OK);
   }
-
+// 회원 탈퇴 - 1인 db에서 삭제
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteMember(@PathVariable("id") long id) {
     memberService.deleteMember(id);
     log.info("삭제 완료");
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
-
+// 회원 전체 삭제
   @DeleteMapping("/")
   public ResponseEntity<?> deleteAll() {
     memberService.deleteAllMembers();
