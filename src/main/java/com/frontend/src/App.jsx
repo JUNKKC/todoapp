@@ -35,7 +35,6 @@ function App() {
     const [todos, setTodos] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTodos, setFilteredTodos] = useState([]);
-    const [isSignup, setIsSignup] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const [userName, setUserName] = useState('');
     const [userId, setUserId] = useState(null);

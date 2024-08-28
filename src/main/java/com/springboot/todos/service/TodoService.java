@@ -23,8 +23,9 @@ public class TodoService {
     this.todoRepository = todoRepository;
     this.memberRepository = memberRepository;
   }
-
+// @Transactional 어노테이션을 사용하여 트랜잭션을 적용합니다.
   @Transactional
+  // 할일 저장
   public Todos createTodo(Todos todos, Authentication authentication) {
     String username = authentication.getName();
     Member member = memberRepository.findByEmail(username)

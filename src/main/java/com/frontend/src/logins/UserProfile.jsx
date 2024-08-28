@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './UserProfile.css';
 
-const UserProfile = ({ userId, userName, onProfileUpdate, onLogout, onGoBack }) => {
+const UserProfile = ({  userName, onProfileUpdate, onLogout, onGoBack }) => {
     const [name, setName] = useState(userName);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
