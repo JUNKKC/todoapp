@@ -3,18 +3,89 @@
   flex-direction: column;
   gap: 20px;
 }
-.List > input {
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.search> input {
+  flex: 1;
   width: 100%;
   border: none;
   border-bottom: 1px solid rgb(220, 220, 220);
-  padding: 15px, 0px;
+  padding: 15px 0px;
 }
-.List > input:focus {
+
+.search> input:focus {
   outline: none;
   border-bottom: 1px solid rgb(37, 147, 255);
 }
+.search button{
+  cursor: pointer;
+  color: gray;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .List .todos_wrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+.test {
+  display: flex;
+  align-items: center;
+}
+.test .todoList{
+  flex: 1;
+}
+.test button{
+  cursor: pointer;
+  color: gray;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.status {
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  gap: 10px; /* 버튼 간격 */
+}
+
+.status button {
+  cursor: pointer;
+  color: gray;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  height: 25px;
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+/*.status button {*/
+/*  cursor: pointer;*/
+/*  color: greenyellow;*/
+/*  background-color: blue;*/
+/*  font-size: 10px;*/
+/*  border: none; !* 테두리 없애기 *!*/
+/*  border-radius: 5px;*/
+/*  padding: 10px ;*/
+/*  transition: background-color 0.3s ease, opacity 0.3s ease;*/
+/*}*/
+
+/*.status button:hover {*/
+/*  background-color: red; !* 호버 시 어두운 빨간 *!*/
+/*  opacity: 1; !* 호버 시 불투명도 100% *!*/
+/*}*/
+
+/*.status button:active {*/
+/*  color: white;*/
+/*  background-color: yellow;  !* 클릭 시 노란색 *!*/
+/*  opacity: 1; !* 호버 시 불투명도 100% *!*/
+/*}*/
