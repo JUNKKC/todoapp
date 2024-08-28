@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
-import Signup from '././logins/Signup';
-import Login from '././logins/Login';
+import Signup from './logins/Signup';
+import Login from './logins/Login';
+import UserProfile from './logins/UserProfile';
 import axios from 'axios';
 import './App.css';
 import Top from "./components/Top.jsx";
 
-// 토큰을 안전하게 가져오기 위해 즉시 실행 함수(IIFE)를 사용
 const token = localStorage.getItem('token') || '';
 
 const axiosInstance = axios.create({
@@ -35,8 +35,10 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTodos, setFilteredTodos] = useState([]);
     const [isSignup, setIsSignup] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // 초기 로그인 상태 설정
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const [userName, setUserName] = useState('');
+    const [userId, setUserId] = useState(null);
+    const [isEditingProfile, setIsEditingProfile] = useState(false);
     const idRef = useRef(0);
 
     useEffect(() => {
@@ -49,6 +51,7 @@ function App() {
         try {
             const response = await axiosInstance.get('/members/me');
             setUserName(response.data.name);
+            setUserId(response.data.memberId); // userId를 상태로 저장
         } catch (error) {
             console.error('사용자 정보를 가져오는 중 오류가 발생했습니다!', error);
             alert('사용자 정보를 가져오는 중 오류가 발생했습니다.');
@@ -56,7 +59,7 @@ function App() {
     };
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn && !isEditingProfile) {
             const fetchTodos = async () => {
                 try {
                     const response = await axiosInstance.get('/todos/');
@@ -74,7 +77,7 @@ function App() {
 
             fetchTodos();
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, isEditingProfile]);
 
     const onCreate = async (title, modifiedAt) => {
         const newTodo = {
@@ -171,23 +174,30 @@ function App() {
             const response = await axiosInstance.post('/auth/login', credentials);
 
             if (response.status === 200) {
-                const existingToken = localStorage.getItem('token');
-                const newToken = response.data.accessToken;
-
-                if (existingToken !== newToken) {
-                    localStorage.setItem('token', newToken);
-                    console.log('토큰이 변경되었습니다.');
-                } else {
-                    console.log('토큰이 동일합니다.');
-                }
-
+                localStorage.setItem('token', response.data.accessToken);
                 setIsLoggedIn(true);
+                setIsEditingProfile(false); // 메인 페이지로 이동
             } else {
                 alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
             }
         } catch (error) {
             console.error('로그인 중 오류가 발생했습니다!', error);
-            alert( (error.response?.data?.message || '서버 오류가 발생했습니다.'));
+            alert(error.response?.data?.message || '서버 오류가 발생했습니다.');
+        }
+    };
+
+    const handleProfileUpdate = async (name, oldPassword, newPassword) => {
+        try {
+            const response = await axiosInstance.patch(`/members/${userId}`, {
+                name,
+                oldPassword,
+                newPassword,
+            });
+
+            alert('회원 정보가 성공적으로 수정되었습니다. 다시 로그인하세요.');
+            handleLogout(); // 성공적으로 업데이트 후 로그아웃 처리
+        } catch (error) {
+            throw error; // 예외를 던져 UserProfile에서 처리
         }
     };
 
@@ -195,29 +205,38 @@ function App() {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
         setUserName('');
+        setIsEditingProfile(false); // 메인 페이지로 이동
     };
 
     return (
         <div className="App">
             <Top />
             {isLoggedIn ? (
-                <>
-                    <Header name={userName} onLogout={handleLogout} />
-                    <Editor onCreate={onCreate} />
-                    <List
-                        todos={filteredTodos}
-                        onUpdate={onUpdate}
-                        onDelete={onDelete}
-                        onAllDelete={onAllDelete}
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        handleSearch={handleSearch}
+                isEditingProfile ? (
+                    <UserProfile
+                        userName={userName}
+                        onProfileUpdate={handleProfileUpdate}
+                        onLogout={handleLogout}
                     />
-                </>
+                ) : (
+                    <>
+                        <Header name={userName} onLogout={handleLogout} onEditProfile={() => setIsEditingProfile(true)} />
+                        <Editor onCreate={onCreate} />
+                        <List
+                            todos={filteredTodos}
+                            onUpdate={onUpdate}
+                            onDelete={onDelete}
+                            onAllDelete={onAllDelete}
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            handleSearch={handleSearch}
+                        />
+                    </>
+                )
             ) : isSignup ? (
                 <Signup
                     onSignup={handleSignup}
-                    onSwitchToLogin={() => setIsSignup(false)} // 추가된 부분
+                    onSwitchToLogin={() => setIsSignup(false)}
                 />
             ) : (
                 <div>
@@ -231,4 +250,4 @@ function App() {
     );
 }
 
-    export default App;
+export default App;
