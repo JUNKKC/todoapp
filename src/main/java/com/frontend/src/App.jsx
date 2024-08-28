@@ -6,6 +6,7 @@ import Signup from '././logins/Signup';
 import Login from '././logins/Login';
 import axios from 'axios';
 import './App.css';
+import Top from "./components/Top.jsx";
 
 // 토큰을 안전하게 가져오기 위해 즉시 실행 함수(IIFE)를 사용
 const token = localStorage.getItem('token') || '';
@@ -198,6 +199,7 @@ function App() {
 
     return (
         <div className="App">
+            <Top />
             {isLoggedIn ? (
                 <>
                     <Header name={userName} onLogout={handleLogout} />
