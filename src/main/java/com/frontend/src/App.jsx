@@ -7,11 +7,14 @@ import Login from '././logins/Login';
 import axios from 'axios';
 import './App.css';
 
+// 토큰을 안전하게 가져오기 위해 즉시 실행 함수(IIFE)를 사용
+const token = localStorage.getItem('token') || '';
+
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8080',
     headers: {
         'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Authorization': token ? `Bearer ${token}` : '',
     },
 });
 
@@ -31,24 +34,23 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTodos, setFilteredTodos] = useState([]);
     const [isSignup, setIsSignup] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userName, setUserName] = useState(''); // 사용자 이름 상태 추가
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // 초기 로그인 상태 설정
+    const [userName, setUserName] = useState('');
     const idRef = useRef(0);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-            fetchUserName(); // 로그인된 사용자의 이름을 가져옴
+        if (isLoggedIn) {
+            fetchUserName();
         }
     }, [isLoggedIn]);
 
     const fetchUserName = async () => {
         try {
             const response = await axiosInstance.get('/members/me');
-            setUserName(response.data.name);  // 사용자의 이름을 상태로 설정
+            setUserName(response.data.name);
         } catch (error) {
             console.error('사용자 정보를 가져오는 중 오류가 발생했습니다!', error);
+            alert('사용자 정보를 가져오는 중 오류가 발생했습니다.');
         }
     };
 
@@ -65,6 +67,7 @@ function App() {
                             : 1;
                 } catch (error) {
                     console.error('할 일 목록을 가져오는 중 오류가 발생했습니다!', error);
+                    alert('할 일 목록을 가져오는 중 오류가 발생했습니다.');
                 }
             };
 
@@ -86,6 +89,7 @@ function App() {
             setFilteredTodos([response.data, ...todos]);
         } catch (error) {
             console.error('할 일 생성 중 오류가 발생했습니다!', error);
+            alert('할 일 생성 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -106,6 +110,7 @@ function App() {
                 setFilteredTodos(updatedTodos);
             } catch (error) {
                 console.error('할 일 업데이트 중 오류가 발생했습니다!', error);
+                alert('할 일 업데이트 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
             }
         }
     };
@@ -118,6 +123,7 @@ function App() {
             setFilteredTodos(remainingTodos);
         } catch (error) {
             console.error('할 일 삭제 중 오류가 발생했습니다!', error);
+            alert('할 일 삭제 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -129,6 +135,7 @@ function App() {
                 setFilteredTodos([]);
             } catch (error) {
                 console.error('할 일 전체 삭제 중 오류가 발생했습니다!', error);
+                alert('할 일 전체 삭제 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
             }
         }
     };
@@ -141,16 +148,11 @@ function App() {
             setFilteredTodos(response.data);
         } catch (error) {
             console.error('할 일 검색 중 오류가 발생했습니다!', error);
+            alert('할 일 검색 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
         }
     };
 
     const handleSignup = async (userInfo) => {
-        const newUser = {
-            username: userInfo.username,
-            password: userInfo.password,
-            name: userInfo.name,
-        };
-
         try {
             const response = await axios.post('http://localhost:8080/members/', userInfo);
             if (response.status === 201) {
@@ -159,7 +161,7 @@ function App() {
             }
         } catch (error) {
             console.error('회원가입 중 오류가 발생했습니다!', error);
-            alert('회원가입 실패: ' + error.response?.data?.message || error.message);
+            alert('회원가입 실패: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -184,21 +186,21 @@ function App() {
             }
         } catch (error) {
             console.error('로그인 중 오류가 발생했습니다!', error);
-            alert('로그인 실패: 서버 오류가 발생했습니다.');
+            alert( (error.response?.data?.message || '서버 오류가 발생했습니다.'));
         }
     };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
-        setUserName('');  // 로그아웃 시 사용자 이름 초기화
+        setUserName('');
     };
 
     return (
         <div className="App">
             {isLoggedIn ? (
                 <>
-                    <Header name={userName} onLogout={handleLogout} /> {/* 사용자 이름 전달 */}
+                    <Header name={userName} onLogout={handleLogout} />
                     <Editor onCreate={onCreate} />
                     <List
                         todos={filteredTodos}
