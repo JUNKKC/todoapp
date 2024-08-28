@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css';
 
-function Signup({ onSignup }) {
+function Signup({ onSignup, onSwitchToLogin }) { // onSwitchToLogin 콜백 추가
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -37,6 +37,7 @@ function Signup({ onSignup }) {
     };
 
     return (
+        <div>
         <div className="signup-container">
             <h2>회원가입</h2>
             <form onSubmit={handleSubmit}>
@@ -72,7 +73,13 @@ function Signup({ onSignup }) {
                     />
                 </div>
                 <button type="submit">회원가입</button>
+
             </form>
+        </div>
+            <div className="login">
+            <button className="togologin" onClick={onSwitchToLogin}>로그인 하러가기</button>
+
+        </div>
         </div>
     );
 }

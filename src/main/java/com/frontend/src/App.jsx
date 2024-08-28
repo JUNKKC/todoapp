@@ -213,7 +213,10 @@ function App() {
                     />
                 </>
             ) : isSignup ? (
-                <Signup onSignup={handleSignup} />
+                <Signup
+                    onSignup={handleSignup}
+                    onSwitchToLogin={() => setIsSignup(false)} // 추가된 부분
+                />
             ) : (
                 <div>
                     <Login onLogin={handleLogin} />
@@ -226,4 +229,4 @@ function App() {
     );
 }
 
-export default App;
+    export default App;
