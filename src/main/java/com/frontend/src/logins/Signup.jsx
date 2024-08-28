@@ -12,49 +12,33 @@ function Signup({ onSignup, onSwitchToLogin }) {
         return emailRegex.test(email);
     };
 
-    // 한글을 감지하는 함수
     const containsKorean = (text) => /[\u3131-\uD79D]/g.test(text);
-
-    // 공백을 감지하는 함수
     const containsWhitespace = (text) => /\s/g.test(text);
-
-    // 이메일에 허용된 문자만 남기는 함수 (@, ., 영어 알파벳, 숫자만 허용)
-    const filterInvalidCharacters = (text) => text.replace(/[^a-zA-Z0-9@.]/g, '');
-
-    const handleEmailChange = (e) => {
-        const inputValue = e.target.value;
-        const filteredValue = filterInvalidCharacters(inputValue);
-
-        // 3항 연산자로 조건에 따른 경고 메시지 처리
-        containsKorean(inputValue)
-            ? alert('이메일 주소에는 한글을 사용할 수 없습니다.')
-            : containsWhitespace(inputValue)
-                ? alert('이메일 주소에는 공백을 사용할 수 없습니다.')
-                : inputValue !== filteredValue
-                    ? alert('이메일 주소에는 특수기호를 사용할 수 없습니다.')
-                    : setEmail(filteredValue);
-    };
+    const containsInvalidCharacters = (text) => /[^a-zA-Z0-9@.]/g.test(text);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        let errorMessage = '';
+
         if (email === '' || password === '' || name === '') {
-            alert('빈 칸을 모두 채워주세요.');
-            return;
+            errorMessage = '빈 칸을 모두 채워주세요.';
+        } else if (!validateEmail(email)) {
+            errorMessage = '유효한 이메일 주소를 입력해주세요.';
+        } else if (containsKorean(email)) {
+            errorMessage = '이메일 주소에는 한글을 사용할 수 없습니다.';
+        } else if (containsWhitespace(email)) {
+            errorMessage = '이메일 주소에는 공백을 사용할 수 없습니다.';
+        } else if (containsInvalidCharacters(email)) {
+            errorMessage = '이메일 에는 @,. 를 제외한 특수기호를 사용할 수 없습니다.';
+        } else if (name.length > 8) {
+            errorMessage = '닉네임은 8자 이하로 작성해주세요.';
+        } else if (password !== confirmPassword) {
+            errorMessage = '비밀번호가 일치하지 않습니다.';
         }
 
-        if (!validateEmail(email)) {
-            alert('유효한 이메일 주소를 입력해주세요.');
-            return;
-        }
-
-        if (name.length > 8) {
-            alert('닉네임은 8자 이하로 작성해주세요');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert('비밀번호가 일치하지 않습니다.');
+        if (errorMessage) {
+            alert(errorMessage);
             return;
         }
 
@@ -71,7 +55,7 @@ function Signup({ onSignup, onSwitchToLogin }) {
                         <input
                             type="text"
                             value={email}
-                            onChange={handleEmailChange}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
