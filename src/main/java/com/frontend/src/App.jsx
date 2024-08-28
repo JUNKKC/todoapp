@@ -32,15 +32,25 @@ function App() {
     const [filteredTodos, setFilteredTodos] = useState([]);
     const [isSignup, setIsSignup] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState(''); // 사용자 이름 상태 추가
     const idRef = useRef(0);
 
-    // 컴포넌트가 마운트될 때 로컬 스토리지에서 토큰을 확인하여 로그인 상태 설정
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsLoggedIn(true);
+            fetchUserName(); // 로그인된 사용자의 이름을 가져옴
         }
-    }, []);
+    }, [isLoggedIn]);
+
+    const fetchUserName = async () => {
+        try {
+            const response = await axiosInstance.get('/members/me');
+            setUserName(response.data.name);  // 사용자의 이름을 상태로 설정
+        } catch (error) {
+            console.error('사용자 정보를 가져오는 중 오류가 발생했습니다!', error);
+        }
+    };
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -181,13 +191,14 @@ function App() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
+        setUserName('');  // 로그아웃 시 사용자 이름 초기화
     };
 
     return (
         <div className="App">
             {isLoggedIn ? (
                 <>
-                    <Header onLogout={handleLogout} />
+                    <Header name={userName} onLogout={handleLogout} /> {/* 사용자 이름 전달 */}
                     <Editor onCreate={onCreate} />
                     <List
                         todos={filteredTodos}
