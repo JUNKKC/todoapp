@@ -22,6 +22,8 @@ const UserProfile = ({  userName, onProfileUpdate, onLogout, onGoBack }) => {
             errorMessage = '이름에는 공백을 사용할 수 없습니다.';
         } else if (name.length > 8) {
             errorMessage = '이름은 8자 이내로 입력하세요.';
+        } else if (newPassword.length > 20) {
+            errorMessage = '비밀번호는 20자 이하로 작성해주세요.';
         } else if (newPassword !== confirmPassword) {
             errorMessage = '새 비밀번호가 일치하지 않습니다.';
         } else if (containsWhitespace(newPassword)) {
