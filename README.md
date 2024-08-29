@@ -23,11 +23,11 @@
 ## 실행 방법
 
 1. **백엔드**:
-  - Gradle 을 사용해 의존성 설치 후 애플리케이션 실행
-  - MySQL 데이터베이스 설정 필요
+    - Gradle 을 사용해 의존성 설치 후 애플리케이션 실행
+    - MySQL 데이터베이스 설정 필요
 2. **프론트엔드**:
-  - `npm install` 명령어로 필요한 패키지 설치
-  - `npm run dev`로 개발 서버 실행
+    - `npm install` 명령어로 필요한 패키지 설치
+    - `npm run dev`로 개발 서버 실행
 ## 기능 구현
 <details>
   <summary></summary>
