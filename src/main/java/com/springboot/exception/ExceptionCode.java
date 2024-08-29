@@ -8,7 +8,9 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "회원이 이미 존재합니다"),
     CANNOT_CHANGE_ORDER(403, "순서를 변경할 수 없습니다"),
     NOT_IMPLEMENTATION(501, "구현되지 않았습니다"),
-    INVALID_MEMBER_STATUS(400, "유효하지 않은 회원 상태입니다");
+    INVALID_MEMBER_STATUS(400, "유효하지 않은 회원 상태입니다"),
+   EMAIL_EXISTS(409, "이미 가입된 이메일입니다.");
+
 
 
     @Getter
