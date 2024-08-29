@@ -61,11 +61,11 @@ public class TodoController {
     List<Todos> todos;
     Member member = todoService.findMemberByEmail(authentication.getName());
 
-    if (member.getRoles().contains("ADMIN")) {
-      todos = todoService.findAlltodos(); // Admin 계정이면 모든 투두 가져오기
-    } else {
+//    if (member.getRoles().contains("ADMIN")) {
+//      todos = todoService.findAlltodos(); // Admin 계정이면 모든 투두 가져오기
+//    } else {
       todos = todoService.findTodosByUser(authentication); // 일반 사용자이면 자신의 투두만 가져오기
-    }
+//    }
 
     log.info("전체 조회 완료");
     return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
@@ -90,11 +90,11 @@ public class TodoController {
     List<Todos> todos;
     Member member = todoService.findMemberByEmail(authentication.getName());
 
-    if (member.getRoles().contains("ADMIN")) {
-      todos = todoService.searchTodosByTitle(title); // Admin 계정이면 모든 투두 검색
-    } else {
+//    if (member.getRoles().contains("ADMIN")) {
+//      todos = todoService.searchTodosByTitle(title); // Admin 계정이면 모든 투두 검색
+//    } else {
       todos = todoService.searchTodosByTitleAndUser(authentication, title); // 일반 사용자이면 자신의 투두만 검색
-    }
+//    }
 
     log.info("검색 완료");
     return new ResponseEntity<>(todoMapper.todosToTodoResponseDtos(todos), HttpStatus.OK);
