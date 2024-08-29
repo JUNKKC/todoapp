@@ -86,7 +86,7 @@ function Signup({ onSignup, onSwitchToLogin }) {
                 </form>
             </div>
             <div className="login">
-                <button className="togologin" onClick={onSwitchToLogin}>로그인 하러가기</button>
+                <button className="togologin" onClick={onSwitchToLogin}>뒤로가기</button>
             </div>
         </div>
     );
