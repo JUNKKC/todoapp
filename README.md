@@ -7,12 +7,12 @@
 
 | 페이지 (기능)  | 이미지                                                      |
 |-----------|----------------------------------------------------------|
-| 회원 가입     | ![회원가입 페이지]()              |
-| 로그인       | ![로그인]()                      |
-| 할 일 추가    | ![할일 추가 기능]()                 |
-| 할 일 완료 삭제 | ![기능 구현 상태변경 삭제](i) |
-| 검색 기능     | ![기능 구현 검색]()                          |
-| 정보 수정     | ![내정보 페이지]()                         |
+| 회원 가입     | ![회원가입 페이지](https://github.com/JUNKKC/todoapp/blob/main/images/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.gif?raw=true)              |
+| 로그인       | ![로그인](https://github.com/JUNKKC/todoapp/blob/main/images/%EB%A1%9C%EA%B7%B8%EC%9D%B8.gif?raw=true)                      |
+| 할 일 추가    | ![할일 추가 기능](https://github.com/JUNKKC/todoapp/blob/main/images/%ED%95%A0%EC%9D%BC%20%EC%B6%94%EA%B0%80%20%EA%B8%B0%EB%8A%A5.gif?raw=true)                 |
+| 할 일 완료 삭제 | ![기능 구현 상태변경 삭제](https://github.com/JUNKKC/todoapp/blob/main/images/%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84%20%EC%83%81%ED%83%9C%EB%B3%80%EA%B2%BD%20%EC%82%AD%EC%A0%9C.gif?raw=true) |
+| 검색 기능     | ![기능 구현 검색](https://github.com/JUNKKC/todoapp/blob/main/images/%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84%20%EA%B2%80%EC%83%89.gif?raw=true)                          |
+| 정보 수정     | ![내정보 페이지](https://github.com/JUNKKC/todoapp/blob/main/images/%EB%82%B4%EC%A0%95%EB%B3%B4%20%ED%8E%98%EC%9D%B4%EC%A7%80.gif?raw=true)                         |
 
 
 ## 기술 스택
